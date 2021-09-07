@@ -4,12 +4,15 @@ import pandas as pd
 import time
 
 def scrape_info():
-    executable_path = {"executable_path": "/Users/meetkamalkaursahni/Documents/chromedriver"}
+    executable_path = {'executable_path': 'chromedriver'}
     browser = Browser("chrome", **executable_path)
 
     url = 'https://redplanetscience.com/'
 
     browser.visit(url)
+
+    time.sleep(5)
+    
     html = browser.html
     soup = bs(html, 'html.parser')
 
@@ -22,10 +25,11 @@ def scrape_info():
     url2 = "https://spaceimages-mars.com/"
 
     browser.visit(url2)
+    time.sleep(2)
     html2 = browser.html
     soup2 = bs(html2, 'html.parser')
 
-    image_url = soup2.select_one("img.fancybox-image")['src']
+    image_url = soup2.find('img', class_='headerimage fade-in')['src']
 
     url3 = 'https://galaxyfacts-mars.com/'
 
@@ -48,11 +52,6 @@ def scrape_info():
     browser.visit(url4)
     html = browser.html
     soup4 = bs(html, 'html.parser') 
-
-    link1 = "https://marshemispheres.com/cerberus.html"
-    link2 = "https://marshemispheres.com/schiaparelli.html"
-    link3 = "https://marshemispheres.com/syrtis.html"
-    link4 = "https://marshemispheres.com/valles.html"
 
     # Create an empty list to hold dictionaries of hemisphere title with the image url string
     hemisphere_image_urls = []
@@ -81,12 +80,12 @@ def scrape_info():
         hemisphere_image_urls.append(entry)
     
         # Store data in a dictionary
-        html_data = {
+    mars_data = {
         "news_title": news_title,
         "news_body": news_body,
         "image_url": image_url,
         "hemisphere_urls": hemisphere_image_urls
-        }
+    }
 
     # Close the browser after scraping
     browser.quit()
