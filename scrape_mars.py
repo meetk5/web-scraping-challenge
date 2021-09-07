@@ -1,6 +1,7 @@
 from splinter import Browser
 from bs4 import BeautifulSoup as bs
 import pandas as pd
+import time
 
 def scrape_info():
     executable_path = {"executable_path": "/Users/meetkamalkaursahni/Documents/chromedriver"}
@@ -53,20 +54,39 @@ def scrape_info():
     link3 = "https://marshemispheres.com/syrtis.html"
     link4 = "https://marshemispheres.com/valles.html"
 
-    hemisphere_image_urls = [
-    {"title": "Valles Marineris Hemisphere", "img_url": link4},
-    {"title": "Cerberus Hemisphere", "img_url": link1},
-    {"title": "Schiaparelli Hemisphere", "img_url": link2},
-    {"title": "Syrtis Major Hemisphere", "img_url": link3},
-    ]
+    # Create an empty list to hold dictionaries of hemisphere title with the image url string
+    hemisphere_image_urls = []
+    hemisphere_list = soup4.find_all('div', class_='item')
+    for item in hemisphere_list:
     
-    # Store data in a dictionary
-    html_data = {
+        url = 'https://marshemispheres.com/'
+    
+        title = item.find('h3').text
+        title = title.replace('Enhanced', '')
+        link = item.find('a')['href']
+        full_link = url + link
+    
+        executable_path = {'executable_path': 'chromedriver'}
+        browser = Browser('chrome', **executable_path, headless=False)
+        browser.visit(full_link)
+        time.sleep(5)
+        html = browser.html
+        soup = bs(html, 'html.parser')
+        
+        
+        downloads = soup.find('div', class_='downloads')
+        image = downloads.find('a')['href']
+    
+        entry = {title: image}
+        hemisphere_image_urls.append(entry)
+    
+        # Store data in a dictionary
+        html_data = {
         "news_title": news_title,
         "news_body": news_body,
         "image_url": image_url,
         "hemisphere_urls": hemisphere_image_urls
-    }
+        }
 
     # Close the browser after scraping
     browser.quit()
