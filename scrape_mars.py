@@ -84,6 +84,7 @@ def scrape_info():
         "news_title": news_title,
         "news_body": news_body,
         "image_url": image_url,
+        "mars_facts":html,
         "hemisphere_urls": hemisphere_image_urls
     }
 
@@ -91,5 +92,5 @@ def scrape_info():
     browser.quit()
 
     # Return results
-    return html_data
+    return mars_data
 

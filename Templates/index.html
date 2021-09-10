@@ -32,7 +32,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <h2>Featured Mars Image</h2>
-                                <img class="img-fluid" src="{{ mars_data.image_url }}" alt="Featured Pic of Mars" width="800">
+                                <img class="img-fluid" src="{{mars_data.image_url}}" alt="Featured Pic of Mars" width="800">
                             </div>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                             <div class="col-md-12">
                             <div class="table table-striped">
                                 <h2>Mars Facts</h2>
-                                <h6>{{mars_data.html | safe}} </h6>
+                                <h6>{{mars_data.mars_facts | safe}} </h6>
                                 <p></p>
                             </div>
                             </div>
@@ -68,7 +68,7 @@
                                             <br>
                                             <br>
                                         </div>
-                                        
+                                
                                 </div>
                                 {% endfor %}
                             </div>
